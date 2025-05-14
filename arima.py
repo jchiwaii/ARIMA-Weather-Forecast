@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import itertools
 import plotly.express as px
+import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 from statsmodels.tsa.arima.model import ARIMA
 from sklearn.metrics import mean_squared_error, mean_absolute_error
@@ -18,8 +19,26 @@ df.set_index('datetime', inplace=True)
 df = df[['temp']]
 
 # Plotting the data
-fig = px.line(df.reset_index(), x='datetime', y='temp')
-fig.update_layout(xaxis_title='Date', yaxis_title='Temperature')
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(
+    x=df.index,
+    y=df['temp'],
+    mode='lines',
+    name='Observed',
+    line=dict(color='blue')
+))
+
+fig.update_layout(
+    title="Observed Temperature Over Time",
+    xaxis_title="Date",
+    yaxis_title="Temperature (°F)",
+    template='simple_white',
+    font=dict(family="Arial", size=14),
+    title_x=0.5,
+    margin=dict(l=40, r=40, t=40, b=40)
+)
+
 fig.show()
 
 # Splitting the data into train and test sets
@@ -50,15 +69,41 @@ last_date = df.index[-1]
 forecast_dates = pd.date_range(start=last_date + pd.Timedelta(days=1), periods=10, freq='D')
 
 # Plot
-plt.figure(figsize=(10, 5))
-plt.plot(df.index, df['temp'], label='Observed')
-plt.plot(forecast_dates, forecast, label='Forecast', color='red')
-plt.legend()
-plt.xlabel("Date")
-plt.ylabel("Temperature (°F)")
-plt.title("Forecasted Temperature for Nairobi")
-plt.grid(True)
-plt.show()
+# Create Plotly figure
+fig = go.Figure()
+
+# Add observed temperature trace
+fig.add_trace(go.Scatter(
+    x=df.index,
+    y=df['temp'],
+    mode='lines',
+    name='Observed',
+    line=dict(color='blue')
+))
+
+# Add forecasted temperature trace
+fig.add_trace(go.Scatter(
+    x=forecast_dates,
+    y=forecast,
+    mode='lines+markers',
+    name='Initial Forecast',
+    line=dict(color='red', dash='dash'),
+    marker=dict(symbol='circle', size=6)
+))
+
+# Update layout
+fig.update_layout(
+    title="Initial 10-Day Temperature Forecast for Nairobi",
+    xaxis_title="Date",
+    yaxis_title="Temperature (°F)",
+    template='simple_white',
+    font=dict(family="Arial", size=14),
+    title_x=0.5,
+    margin=dict(l=40, r=40, t=40, b=40),
+    legend=dict(x=0.01, y=0.99, bgcolor='rgba(255,255,255,0)', borderwidth=0)
+)
+
+fig.show()
 
 # Tuning the model
 p = d = q = range(0,10)
@@ -111,14 +156,37 @@ print("\nFinal 10-Day Forecast:")
 print(forecast_df)
 
 # Plot the entire data + forecast
-plt.figure(figsize=(12, 6))
-plt.plot(df.index, df['temp'], label='Observed', color='blue')
-plt.plot(forecast_dates, predictions, label='Final Forecast (Best ARIMA)', color='green', linestyle='--', marker='o')
-plt.xlabel("Date")
-plt.ylabel("Temperature (°F)")
-plt.title("Final 10-Day Temperature Forecast for Nairobi (Using Best ARIMA Model)")
-plt.legend()
-plt.grid(True)
-plt.tight_layout()
-plt.show()
+fig = go.Figure()
 
+# Observed data
+fig.add_trace(go.Scatter(
+    x=df.index,
+    y=df['temp'],
+    mode='lines',
+    name='Observed',
+    line=dict(color='blue')
+))
+
+# Final forecast (Best ARIMA)
+fig.add_trace(go.Scatter(
+    x=forecast_dates,
+    y=predictions,
+    mode='lines+markers',
+    name='Final Forecast (Best ARIMA)',
+    line=dict(color='green', dash='dash'),
+    marker=dict(symbol='circle', size=6)
+))
+
+# Layout styling
+fig.update_layout(
+    title="Final 10-Day Temperature Forecast for Nairobi (Using Best ARIMA Model)",
+    xaxis_title="Date",
+    yaxis_title="Temperature (°F)",
+    template='simple_white',
+    font=dict(family="Arial", size=14),
+    title_x=0.5,
+    margin=dict(l=40, r=40, t=40, b=40),
+    legend=dict(x=0.01, y=0.99, bgcolor='rgba(255,255,255,0)', borderwidth=0)
+)
+
+fig.show()
