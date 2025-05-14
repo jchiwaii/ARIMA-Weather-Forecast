@@ -20,7 +20,7 @@ df = df[['temp']]
 # Plotting the data
 fig = px.line(df.reset_index(), x='datetime', y='temp')
 fig.update_layout(xaxis_title='Date', yaxis_title='Temperature')
-# fig.show()
+fig.show()
 
 # Splitting the data into train and test sets
 train_size = int(len(df) * 0.67)
@@ -58,7 +58,7 @@ plt.xlabel("Date")
 plt.ylabel("Temperature (°F)")
 plt.title("Forecasted Temperature for Nairobi")
 plt.grid(True)
-# plt.show()
+plt.show()
 
 # Tuning the model
 p = d = q = range(0,10)
@@ -104,6 +104,11 @@ predictions = model_fit.forecast(steps=10)
 # Get future dates for final forecast
 last_date = df.index[-1]
 forecast_dates = pd.date_range(start=last_date + pd.Timedelta(days=1), periods=10, freq='D')
+
+# Actual Forecasted Temperature
+forecast_df = pd.DataFrame({'Date': forecast_dates, 'Predicted_Temp': predictions})
+print("\nFinal 10-Day Forecast:")
+print(forecast_df)
 
 # Plot the entire data + forecast
 plt.figure(figsize=(12, 6))
