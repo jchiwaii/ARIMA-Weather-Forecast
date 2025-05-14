@@ -1,12 +1,9 @@
 import pandas as pd
 import numpy as np
 import itertools
-import plotly.express as px
 import plotly.graph_objects as go
-import matplotlib.pyplot as plt
 from statsmodels.tsa.arima.model import ARIMA
 from sklearn.metrics import mean_squared_error, mean_absolute_error
-from statsmodels.tsa.vector_ar.var_model import forecast
 
 
 df = pd.read_csv("timeseries.csv")
