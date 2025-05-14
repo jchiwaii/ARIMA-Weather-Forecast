@@ -1,6 +1,8 @@
 # Nairobi Temperature Forecast (ARIMA)
 
-This project uses an ARIMA model to forecast Nairobi's temperature for the next 10 days. Initially, a random ARIMA model is fitted and used to forecast values. A grid search then follows to identify the best parameters for `p`, `d`, and `q`.
+🔗 **[Read the Full Report on Medium](https://medium.com/@chiwai.kiriba/what-nairobis-weather-taught-me-about-time-series-forecasting-aaade4711b62)**  
+
+This project uses an ARIMA model to forecast Nairobi's temperature for the next 10 days. Initially, a random ARIMA model is fitted and used to predict values. A grid search then follows to identify the best parameters for `p`, `d`, and `q`.
 
 The dataset covers one year: **from May 14, 2024, to May 14, 2025**.
 
@@ -22,13 +24,19 @@ pip install -r requirements.txt
 python arima.py
 ```
 
-## Forecast Plot
+## Visualizations
 
-View the interactive plots here:
+### Observed Temperature Over Time
 
-- [Observed Temperature Plot](observed_temperature.html)
-- [Initial Forecast Plot](initial_forecast.html)
-- [Final Forecast Plot](final_forecast.html)
+![Observed Temperature](plots/observed.png)
+
+### Initial 10-Day Forecast
+
+![Initial Forecast](plots/initial.png)
+
+### Final 10-Day Forecast (Best ARIMA Model)
+
+![Final Forecast](plots/forecast.png)
 
 
 ## Notes
