@@ -36,6 +36,8 @@ fig.update_layout(
     margin=dict(l=40, r=40, t=40, b=40)
 )
 
+fig.write_html("observed_temperature.html")
+
 fig.show()
 
 # Splitting the data into train and test sets
@@ -99,6 +101,8 @@ fig.update_layout(
     margin=dict(l=40, r=40, t=40, b=40),
     legend=dict(x=0.01, y=0.99, bgcolor='rgba(255,255,255,0)', borderwidth=0)
 )
+
+fig.write_html("initial_forecast.html")
 
 fig.show()
 
@@ -185,5 +189,7 @@ fig.update_layout(
     margin=dict(l=40, r=40, t=40, b=40),
     legend=dict(x=0.01, y=0.99, bgcolor='rgba(255,255,255,0)', borderwidth=0)
 )
+
+fig.write_html("final_forecast.html")
 
 fig.show()

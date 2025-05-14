@@ -29,3 +29,7 @@ build/
 
 # Logs
 *.log
+
+# Ignore PyCharm project files
+.idea/
+
